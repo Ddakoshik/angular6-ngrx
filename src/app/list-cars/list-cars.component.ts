@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Vihicle } from '../shared/models/vehicle.model';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-list-cars',
@@ -10,7 +11,15 @@ export class ListCarsComponent implements OnInit {
 
   constructor() { }
   @Input() car: Vihicle;
+  @Output() deleteCar = new EventEmitter<Vihicle>();
+
   ngOnInit() {
   }
 
+  onEdit() {
+
+  }
+  onDelete() {
+    this.deleteCar.emit(this.car);
+  }
 }

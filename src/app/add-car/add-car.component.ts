@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators, FormBuilder } from '../../../node_modules/@angular/forms';
+import { Vihicle } from '../shared/models/vehicle.model';
 
 @Component({
   selector: 'app-add-car',
@@ -13,23 +14,13 @@ export class AddCarComponent implements OnInit {
 
   carForm: FormGroup;
 
+  @Output() addCar = new EventEmitter<Vihicle>();
 
   constructor(private modalService: NgbModal,
     private fb: FormBuilder) { }
 
   ngOnInit() {
     this.initForm();
-    const uuid = this.guid();
-    console.log(uuid);
-
-
-
-    // this.carForm = new FormGroup({
-    //   'name': new FormControl('', [
-    //     Validators.required,
-    //     Validators.maxLength(50)
-    //   ])
-    // });
   }
 
   guid() {
@@ -48,23 +39,22 @@ export class AddCarComponent implements OnInit {
       millage: ['', [Validators.required]]
     });
   }
-  // get name() { return this.carForm.get('name'); }
 
-  // get power() { return this.carForm.get('power'); }
 
-  // get alterEgo() { return this.carForm.get('alterEgo'); }
   onSubmitAddNewCarForm() {
     const controls = this.carForm.controls;
     const brand = this.carForm.value.brand;
     const year = this.carForm.value.year;
     const millage = this.carForm.value.millage;
+    const code = this.guid();
 
-    const newvariable = {
+    const car: Vihicle = {
       brand,
       year,
+      code ,
       millage
       };
-      console.log(newvariable);
+      console.log(car);
 
     /** Проверяем форму на валидность */
     if (this.carForm.invalid) {
@@ -76,7 +66,8 @@ export class AddCarComponent implements OnInit {
         /** Прерываем выполнение метода*/
         return;
       } else {
-        console.log('all good');
+        this.addCar.emit(car);
+        this.carForm.reset();
       }
 
   }
