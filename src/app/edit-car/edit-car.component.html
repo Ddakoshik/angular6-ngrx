@@ -1,3 +1,34 @@
-<p>
-  edit-car works!
-</p>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="carForm" #formDir="ngForm">
+      <div class="form-group">
+        <label for="Brand">Brand</label>
+        <input type="text" class="form-control" id="brand" formControlName="brand" placeholder="Enter brand">
+      </div>
+      <div class="form-group">
+        <label for="Year">Year</label>
+        <input type="text" class="form-control" id="year" formControlName="year" placeholder="Enter Year 2000-2018">
+      </div>
+      <div class="form-group">
+        <label for="Millage">Millage</label>
+        <input type="text" class="form-control" id="millage" formControlName="millage"  placeholder="Enter millage">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-primary"
+      (click)="formDir.resetForm({})">Reset</button>
+    <button type="button" class="btn btn-dark" 
+      [disabled]="carForm.invalid" 
+      (click)="onSubmitAddNewCarForm()" 
+      (click)="c('Save click')">Save</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add Car</button>

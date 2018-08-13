@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Vihicle } from '../shared/models/vehicle.model';
-import { EventEmitter } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../shared/redux/app.state';
+import { DeleteCar } from '../shared/redux/cars.action';
 
 @Component({
   selector: 'app-list-cars',
@@ -9,9 +11,8 @@ import { EventEmitter } from '@angular/core';
 })
 export class ListCarsComponent implements OnInit {
 
-  constructor() { }
+  constructor( private store: Store<AppState>) { }
   @Input() car: Vihicle;
-  @Output() deleteCar = new EventEmitter<Vihicle>();
 
   ngOnInit() {
   }
@@ -20,6 +21,6 @@ export class ListCarsComponent implements OnInit {
 
   }
   onDelete() {
-    this.deleteCar.emit(this.car);
+    this.store.dispatch(new DeleteCar(this.car));
   }
 }

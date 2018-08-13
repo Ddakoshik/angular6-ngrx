@@ -2,6 +2,9 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators, FormBuilder } from '../../../node_modules/@angular/forms';
 import { Vihicle } from '../shared/models/vehicle.model';
+import { Store } from '../../../node_modules/@ngrx/store';
+import { AppState } from '../shared/redux/app.state';
+import { AddCar } from '../shared/redux/cars.action';
 
 @Component({
   selector: 'app-add-car',
@@ -11,15 +14,18 @@ import { Vihicle } from '../shared/models/vehicle.model';
 export class AddCarComponent implements OnInit {
 
   closeResult: string;
-
+  lastId: number;
   carForm: FormGroup;
 
-  @Output() addCar = new EventEmitter<Vihicle>();
 
   constructor(private modalService: NgbModal,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit() {
+    this.store.select('carPage').subscribe(({cars}) => {
+      this.lastId = cars.length - 1;
+      console.log('oninit', this.lastId);
+    });
     this.initForm();
   }
 
@@ -47,12 +53,15 @@ export class AddCarComponent implements OnInit {
     const year = this.carForm.value.year;
     const millage = this.carForm.value.millage;
     const code = this.guid();
+    const id = ++this.lastId;
+    console.log(id);
 
     const car: Vihicle = {
       brand,
       year,
       code ,
-      millage
+      millage,
+      id
       };
       console.log(car);
 
@@ -66,7 +75,9 @@ export class AddCarComponent implements OnInit {
         /** Прерываем выполнение метода*/
         return;
       } else {
-        this.addCar.emit(car);
+        // this.addCar.emit(car);
+
+        this.store.dispatch(new AddCar(car));
         this.carForm.reset();
       }
 

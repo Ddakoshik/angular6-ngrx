@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Vihicle, Vihicles } from './shared/models/vehicle.model';
 import { Store } from '../../node_modules/@ngrx/store';
 import { AppState } from './shared/redux/app.state';
+import { Observable } from '../../node_modules/rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,26 +12,15 @@ import { AppState } from './shared/redux/app.state';
 export class AppComponent implements OnInit {
   title = 'angular6-ngrx';
   public vihicles: Vihicle[] = [];
-  lastId: number;
+  public carState: Observable<Vihicles>;
 
-  constructor(private store: Store<AppState>) {}
+
+  constructor(private store: Store<Vihicles>) {}
 
   ngOnInit() {
-    this.store.select('carPage').subscribe(({cars}) => {
-      this.vihicles = cars;
-      this.lastId = this.vihicles.length;
-    });
-    console.log('oninit', this.lastId);
-  }
-  onAdd(car: Vihicle) {
-    car.id = ++this.lastId;
-    console.log(this.lastId);
-    this.vihicles.push(car);
+    this.carState = this.store.select('carPage');
   }
 
-  onDelete(car: Vihicle) {
-    this.vihicles = this.vihicles.filter(c => c.id !== car.id);
-  }
 
   onEdit(car: Vihicle) {
 
