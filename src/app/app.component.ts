@@ -3,7 +3,8 @@ import { Vehicle, Vehicles } from './shared/models/vehicle.model';
 import { Store } from '../../node_modules/@ngrx/store';
 import { AppState } from './shared/redux/app.state';
 import { Observable } from '../../node_modules/rxjs';
-import { AddCar, DeleteCar } from './shared/redux/cars.action';
+import { AddCar, DeleteCar, EditCar } from './shared/redux/cars.action';
+import { ModalDismissReasons, NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +16,11 @@ export class AppComponent implements OnInit {
   public Vehicles: Vehicle[] = [];
   public carState: Observable<Vehicles>;
   selected$: Observable<Vehicle>;
+  closeResult: string;
 
 
-  constructor(private store: Store<Vehicles>) {}
+  constructor(private store: Store<Vehicles>, private modalService: NgbModal) {}
+
 
   ngOnInit() {
     this.carState = this.store.select('carPage');
@@ -31,8 +34,28 @@ export class AppComponent implements OnInit {
   onDeleteCar(car: Vehicle) {
     this.store.dispatch(new DeleteCar(car));
   }
+  onEditCar(car: Vehicle) {
+    this.store.dispatch(new EditCar(car));
+  }
 
-  onEdit(car: Vehicle) {
 
+
+
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 }

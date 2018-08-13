@@ -27,7 +27,6 @@ export function carsReducer (state = initialState, action: CarsAction) {
         const car = state.cars.filter(c => c.id === action.payload.id);
             return{
                 ...state,
-                cars: [],
                 selectedCar: car
             };
         default:

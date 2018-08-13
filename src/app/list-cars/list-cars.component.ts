@@ -18,6 +18,8 @@ export class ListCarsComponent implements OnInit {
 
   onEdit() {
     this.editCar.emit(this.car);
+    console.log('test edit', this.car);
+
   }
   onDelete() {
     this.deleteCar.emit(this.car);

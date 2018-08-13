@@ -80,7 +80,7 @@ export class EditCarComponent implements OnInit {
       } else {
         // this.addCar.emit(car);
 
-        this.store.dispatch(new EditCar(car));
+        // this.store.dispatch(new EditCar(car));
       }
 
   }
