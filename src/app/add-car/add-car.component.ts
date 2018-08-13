@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators, FormBuilder } from '../../../node_modules/@angular/forms';
-import { Vihicle } from '../shared/models/vehicle.model';
+import { Vehicle } from '../shared/models/vehicle.model';
 import { Store } from '../../../node_modules/@ngrx/store';
 import { AppState } from '../shared/redux/app.state';
 import { AddCar } from '../shared/redux/cars.action';
@@ -19,7 +19,8 @@ export class AddCarComponent implements OnInit {
 
 
   constructor(private modalService: NgbModal,
-    private fb: FormBuilder, private store: Store<AppState>) { }
+              private fb: FormBuilder,
+              private store: Store<AppState>) { }
 
   ngOnInit() {
     this.store.select('carPage').subscribe(({cars}) => {
@@ -37,6 +38,9 @@ export class AddCarComponent implements OnInit {
     }
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
+  uniqueId() {
+    return 'id-' + Math.random().toString(36).substr(2, 16);
+  }
 
   initForm() {
     this.carForm = this.fb.group({
@@ -53,10 +57,10 @@ export class AddCarComponent implements OnInit {
     const year = this.carForm.value.year;
     const millage = this.carForm.value.millage;
     const code = this.guid();
-    const id = ++this.lastId;
-    console.log(id);
+    const id = this.uniqueId();
 
-    const car: Vihicle = {
+
+    const car: Vehicle = {
       brand,
       year,
       code ,

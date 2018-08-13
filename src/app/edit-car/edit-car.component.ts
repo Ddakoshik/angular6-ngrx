@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Vihicle } from '../shared/models/vehicle.model';
+import { Vehicle } from '../shared/models/vehicle.model';
 import { FormGroup, FormControl, Validators, FormBuilder } from '../../../node_modules/@angular/forms';
 import { NgbModal, ModalDismissReasons } from '../../../node_modules/@ng-bootstrap/ng-bootstrap';
 import { Store } from '../../../node_modules/@ngrx/store';
@@ -13,7 +13,7 @@ import { EditCar } from '../shared/redux/cars.action';
 })
 export class EditCarComponent implements OnInit {
 
-  todos: Vihicle[] = [];
+  todos: Vehicle[] = [];
   closeResult: string;
   lastId: number;
   carForm: FormGroup;
@@ -25,7 +25,7 @@ export class EditCarComponent implements OnInit {
   }
 
 
-  updateTodoById(id: number, values: Object = {}) {
+  updateTodoById(id: string, values: Object = {}) {
     const todo = this.getTodoById(id);
     if (!todo) {
       return null;
@@ -34,7 +34,7 @@ export class EditCarComponent implements OnInit {
     return todo;
   }
 
-  getTodoById(id: number) {
+  getTodoById(id: string) {
     return this.todos
       .filter(todo => todo.id === id)
       .pop();
@@ -56,10 +56,10 @@ export class EditCarComponent implements OnInit {
     const year = this.carForm.value.year;
     const millage = this.carForm.value.millage;
     const code = '';
-    const id = ++this.lastId;
+    const id = '';
     console.log(id);
 
-    const car: Vihicle = {
+    const car: Vehicle = {
       brand,
       year,
       code ,

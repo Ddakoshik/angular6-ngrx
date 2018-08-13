@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Vihicle } from '../shared/models/vehicle.model';
+import { Vehicle } from '../shared/models/vehicle.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../shared/redux/app.state';
 import { DeleteCar } from '../shared/redux/cars.action';
@@ -12,7 +12,7 @@ import { DeleteCar } from '../shared/redux/cars.action';
 export class ListCarsComponent implements OnInit {
 
   constructor( private store: Store<AppState>) { }
-  @Input() car: Vihicle;
+  @Input() car: Vehicle;
 
   ngOnInit() {
   }

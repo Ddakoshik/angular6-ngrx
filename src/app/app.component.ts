@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Vihicle, Vihicles } from './shared/models/vehicle.model';
+import { Vehicle, Vehicles } from './shared/models/vehicle.model';
 import { Store } from '../../node_modules/@ngrx/store';
 import { AppState } from './shared/redux/app.state';
 import { Observable } from '../../node_modules/rxjs';
@@ -11,18 +11,20 @@ import { Observable } from '../../node_modules/rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'angular6-ngrx';
-  public vihicles: Vihicle[] = [];
-  public carState: Observable<Vihicles>;
+  public Vehicles: Vehicle[] = [];
+  public carState: Observable<Vehicles>;
+  selected$: Observable<Vehicle>;
 
 
-  constructor(private store: Store<Vihicles>) {}
+  constructor(private store: Store<Vehicles>) {}
 
   ngOnInit() {
     this.carState = this.store.select('carPage');
+    this.selected$ =  this.store.select('carPage.selectedCar');
   }
 
 
-  onEdit(car: Vihicle) {
+  onEdit(car: Vehicle) {
 
   }
 }

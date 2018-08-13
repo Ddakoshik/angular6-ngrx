@@ -9,7 +9,7 @@ import { EditCarComponent } from './edit-car/edit-car.component';
 import { FormsModule, ReactiveFormsModule } from '../../node_modules/@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { carsReducer } from './shared/redux/cars.reducer';
-
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +22,9 @@ import { carsReducer } from './shared/redux/cars.reducer';
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot({carPage: carsReducer}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 10 // number of states to retain
+    }),
     NgbModule.forRoot()
   ],
   providers: [],

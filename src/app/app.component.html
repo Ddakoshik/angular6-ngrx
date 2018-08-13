@@ -12,8 +12,9 @@
 
   <div class="list-group mt-4">
     <app-list-cars 
-    [car]="vihicle"  
-    *ngFor="let vihicle of ( carState | async).cars"></app-list-cars>
+    [car]="Vehicle"  
+    *ngFor="let Vehicle of ( carState | async).cars"></app-list-cars>
   </div>
 </div>
 
+<!-- <app-edit-car [car]="selected$ |async"></app-edit-car> -->

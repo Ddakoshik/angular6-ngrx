@@ -1,7 +1,7 @@
-import { Vihicle } from '../models/vehicle.model';
+import { Vehicle } from '../models/vehicle.model';
 
 export interface AppState {
     carPage: {
-        cars: Vihicle[]
+        cars: Vehicle[]
     };
 }
