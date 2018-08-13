@@ -7,6 +7,8 @@ import { AddCarComponent } from './add-car/add-car.component';
 import { ListCarsComponent } from './list-cars/list-cars.component';
 import { EditCarComponent } from './edit-car/edit-car.component';
 import { FormsModule, ReactiveFormsModule } from '../../node_modules/@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { carsReducer } from './shared/redux/cars.reducer';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '../../node_modules/@angular/fo
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({carPage: carsReducer}),
     NgbModule.forRoot()
   ],
   providers: [],
