@@ -8,10 +8,13 @@
 
 
 <div class="container">
-  <app-add-car></app-add-car>
+  <app-add-car
+    (addCar) = "onAdd($event)"
+  ></app-add-car>
 
   <div class="list-group mt-4">
-    <app-list-cars 
+    <app-list-cars
+    (deleteCar) = "onDeleteCar($event)" 
     [car]="Vehicle"  
     *ngFor="let Vehicle of ( carState | async).cars"></app-list-cars>
   </div>

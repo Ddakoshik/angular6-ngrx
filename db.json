@@ -1,0 +1,25 @@
+{
+  "cars": [
+      {
+          "brand": "Ford",
+          "year": "2011",
+          "code": "e936d422-dd23-4576-97cc-35b1ae6b2209",
+          "millage": "200",
+          "id": "0"
+      },
+      {
+          "brand": "Audi",
+          "year": "2014",
+          "code": "e936d422-dd23-4576-97cc-35b1ae6b2209",
+          "millage": "300",
+          "id": "1"
+      },
+      {
+          "brand": "Mazda",
+          "year": "2004",
+          "code": "e936d422-dd23-4576-97cc-35b1ae6b2209",
+          "millage": "100",
+          "id": "2"
+      }
+  ]
+}
