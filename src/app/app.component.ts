@@ -15,8 +15,8 @@ export class AppComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.store.select('carPage').subscribe(d => {
-      console.log(d);
+    this.store.select('carPage').subscribe(({cars}) => {
+      this.vihicles = cars;
     });
   }
   onAdd(car: Vihicle) {
