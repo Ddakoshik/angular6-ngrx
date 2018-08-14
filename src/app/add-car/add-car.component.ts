@@ -1,7 +1,8 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators, FormBuilder } from '../../../node_modules/@angular/forms';
 import { Vehicle } from '../shared/models/vehicle.model';
+
 
 
 @Component({
@@ -9,7 +10,9 @@ import { Vehicle } from '../shared/models/vehicle.model';
   templateUrl: './add-car.component.html',
   styleUrls: ['./add-car.component.css']
 })
-export class AddCarComponent implements OnInit {
+export class AddCarComponent implements OnInit, OnChanges {
+
+  @Input() car: Vehicle;
 
   closeResult: string;
   lastId: number;
@@ -42,6 +45,12 @@ export class AddCarComponent implements OnInit {
       year: ['', [Validators.required, Validators.min(2000), Validators.max(2018)]],
       millage: ['', [Validators.required]]
     });
+  }
+
+  ngOnChanges(changes) {
+    if (changes && changes.car) {
+      this.carForm.patchValue(changes.car);
+    }
   }
 
 

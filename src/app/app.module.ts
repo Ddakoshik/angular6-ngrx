@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppComponent } from './app.component';
 import { AddCarComponent } from './add-car/add-car.component';
@@ -21,6 +22,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    ModalModule.forRoot(),
     StoreModule.forRoot({carPage: carsReducer}),
     StoreDevtoolsModule.instrument({
       maxAge: 10 // number of states to retain
@@ -28,6 +30,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     NgbModule.forRoot()
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [EditCarComponent]
 })
 export class AppModule { }

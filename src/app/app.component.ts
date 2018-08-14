@@ -6,6 +6,12 @@ import { Observable } from '../../node_modules/rxjs';
 import { AddCar, DeleteCar, EditCar } from './shared/redux/cars.action';
 import { ModalDismissReasons, NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
+
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { EditCarComponent } from './edit-car/edit-car.component';
+import { selectFeature, selectCars } from './shared/redux/cars.reducer';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,16 +21,20 @@ export class AppComponent implements OnInit {
   title = 'angular6-ngrx';
   public Vehicles: Vehicle[] = [];
   public carState: Observable<Vehicles>;
-  selected$: Observable<Vehicle>;
+  public cars: Observable<Vehicles>;
+  public editCar: Observable<Vehicles>;
+
   closeResult: string;
+  modalRef: BsModalRef;
 
-
-  constructor(private store: Store<Vehicles>, private modalService: NgbModal) {}
+  constructor(private store: Store<Vehicles>,
+              private modalService: NgbModal,
+              private ngxmodalService: BsModalService) {}
 
 
   ngOnInit() {
-    this.carState = this.store.select('carPage');
-    this.selected$ =  this.store.select('carPage.selectedCar');
+    this.carState = this.store.select(selectFeature);
+    this.cars = this.store.select(selectCars);
   }
 
 
@@ -36,26 +46,6 @@ export class AppComponent implements OnInit {
   }
   onEditCar(car: Vehicle) {
     this.store.dispatch(new EditCar(car));
-  }
-
-
-
-
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
+    this.modalRef = this.ngxmodalService.show(EditCarComponent);
   }
 }

@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Vehicle } from '../models/vehicle.model';
 import { CAR_ACTION, CarsAction } from './cars.action';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 const initialState = {
     cars: [
@@ -8,7 +9,9 @@ const initialState = {
         new Vehicle('Audi', 2002, 'code: e936d422-dd23-4576-97cc-35b1ae6b2209', 200, '1'),
         new Vehicle('Fiat', 2010, 'code: e936d422-dd23-4576-97cc-35b1ae6b2209', 150, '2')
     ],
-    selectedCar: null
+    selectedCar: [
+        new Vehicle('Fiat', 2018, 'code: e936d422-dd23-4576-97cc-35b1ae6b2209', 150, '2')
+    ]
 };
 
 export function carsReducer (state = initialState, action: CarsAction) {
@@ -33,3 +36,22 @@ export function carsReducer (state = initialState, action: CarsAction) {
             return state;
     }
 }
+
+
+
+
+export const selectFeature = createFeatureSelector<any>(
+    'carPage'
+);
+export const selectCars = createSelector(
+    selectFeature,
+    (state) => {
+      return state.cars;
+    }
+);
+export const selectSelectedCar = createSelector(
+    selectFeature,
+    (state) => {
+      return state.selectedCar;
+    }
+);

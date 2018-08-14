@@ -2,6 +2,7 @@ import { Vehicle } from '../models/vehicle.model';
 
 export interface AppState {
     carPage: {
-        cars: Vehicle[]
+        cars: Vehicle[];
+        selectedCar: Vehicle;
     };
 }
