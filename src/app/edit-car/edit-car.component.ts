@@ -5,7 +5,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Observable } from '../../../node_modules/rxjs';
 import { Store } from '../../../node_modules/@ngrx/store';
-
+import { selectSelectedCar } from './../shared/redux/cars.reducer';
 
 
 @Component({
@@ -17,17 +17,28 @@ export class EditCarComponent implements OnInit {
 
   editCar: Observable<Vehicles>;
   closeResult: string;
-  carForm: FormGroup;
+  carFormEdit: FormGroup;
 
 
   selected$: Observable<Vehicle>;
-  modalRef: BsModalRef;
+
 
   constructor(private modalService: BsModalService,
-              private store: Store<Vehicles>) {}
+              private modalRef: BsModalRef,
+              private store: Store<Vehicles>,
+              private fb: FormBuilder) {}
 
   ngOnInit() {
     this.editCar = this.store.select(selectSelectedCar);
+    this.initForm(this.editCar);
+  }
+
+  initForm(editCar) {
+    this.carFormEdit = this.fb.group({
+      brand: [editCar.brand, [Validators.required, Validators.maxLength(50)]],
+      year: ['', [Validators.required, Validators.min(2000), Validators.max(2018)]],
+      millage: ['', [Validators.required]]
+    });
   }
 
 

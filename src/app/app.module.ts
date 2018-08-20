@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AddCarComponent } from './add-car/add-car.component';
@@ -22,6 +23,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     ModalModule.forRoot(),
     StoreModule.forRoot({carPage: carsReducer}),
     StoreDevtoolsModule.instrument({

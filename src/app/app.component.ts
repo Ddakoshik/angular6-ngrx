@@ -46,6 +46,9 @@ export class AppComponent implements OnInit {
   }
   onEditCar(car: Vehicle) {
     this.store.dispatch(new EditCar(car));
-    this.modalRef = this.ngxmodalService.show(EditCarComponent);
+    this.modalRef = this.ngxmodalService.show(EditCarComponent, {
+      class: 'modal-dialog-centered',
+      animated: false
+    });
   }
 }
