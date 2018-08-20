@@ -23,6 +23,6 @@ export class CarsService {
     .toPromise()
     .then((cars: Vehicle[]) => {
       this.store.dispatch(new LoadCars(cars));
-    })
+    });
   }
 }
