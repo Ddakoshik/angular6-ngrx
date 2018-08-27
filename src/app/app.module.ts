@@ -12,6 +12,9 @@ import { FormsModule, ReactiveFormsModule } from '../../node_modules/@angular/fo
 import { StoreModule } from '@ngrx/store';
 import { carsReducer } from './shared/redux/cars.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CarsService } from './shared/service/cars.service';
+import { EffectsModule } from '../../node_modules/@ngrx/effects';
+import { CarsEffect } from './shared/redux/cars.effect';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,12 +29,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HttpClientModule,
     ModalModule.forRoot(),
     StoreModule.forRoot({carPage: carsReducer}),
+    EffectsModule.forRoot([CarsEffect]),
     StoreDevtoolsModule.instrument({
       maxAge: 10 // number of states to retain
     }),
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [CarsService],
   bootstrap: [AppComponent],
   entryComponents: [EditCarComponent]
 })

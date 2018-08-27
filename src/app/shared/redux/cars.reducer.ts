@@ -5,12 +5,8 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 const initialState = {
     cars: [
-        new Vehicle('Ford', 2014, 'code: e936d422-dd23-4576-97cc-35b1ae6b2209', 300, '0'),
-        new Vehicle('Audi', 2002, 'code: e936d422-dd23-4576-97cc-35b1ae6b2209', 200, '1'),
-        new Vehicle('Fiat', 2010, 'code: e936d422-dd23-4576-97cc-35b1ae6b2209', 150, '2')
     ],
     selectedCar: [
-        new Vehicle('Fiat', 2018, 'code: e936d422-dd23-4576-97cc-35b1ae6b2209', 150, '2')
     ]
 };
 
@@ -31,6 +27,11 @@ export function carsReducer (state = initialState, action: CarsAction) {
             return{
                 ...state,
                 selectedCar: car
+            };
+        case CAR_ACTION.LOAD_CAR:
+            return {
+                ...state,
+                cars: [...action.payload]
             };
         default:
             return state;

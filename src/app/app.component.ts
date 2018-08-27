@@ -11,6 +11,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { EditCarComponent } from './edit-car/edit-car.component';
 import { selectFeature, selectCars } from './shared/redux/cars.reducer';
+import { CarsService } from './shared/service/cars.service';
 
 @Component({
   selector: 'app-root',
@@ -29,20 +30,22 @@ export class AppComponent implements OnInit {
 
   constructor(private store: Store<Vehicles>,
               private modalService: NgbModal,
+              private carservice: CarsService,
               private ngxmodalService: BsModalService) {}
 
 
   ngOnInit() {
     this.carState = this.store.select(selectFeature);
     this.cars = this.store.select(selectCars);
+    this.carservice.loadCars();
   }
 
 
   onAdd(car: Vehicle) {
-    this.store.dispatch(new AddCar(car));
+    this.carservice.addCar(car);
   }
   onDeleteCar(car: Vehicle) {
-    this.store.dispatch(new DeleteCar(car));
+    this.carservice.deleteCar(car);
   }
   onEditCar(car: Vehicle) {
     this.store.dispatch(new EditCar(car));
