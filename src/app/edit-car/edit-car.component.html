@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
   <form [formGroup]="carFormEdit" #formDir="ngForm">
-    <!-- <div class="form-group">
+    <div class="form-group">
       <label for="Brand">Brand</label>
       <input type="text" class="form-control" id="brand" formControlName="brand" placeholder="Enter brand">
     </div>
@@ -14,19 +14,14 @@
       <label for="Year">Year</label>
       <input type="text" class="form-control" id="year" formControlName="year" placeholder="Enter Year 2000-2018">
     </div>
-    <div class="form-group">
-      <label for="Millage">Millage</label>
-      <input type="text" class="form-control" id="millage" formControlName="millage"  placeholder="Enter millage">
-    </div> -->
+    <p>Code: <span>{{extractcar[0].code}}</span></p>
+    <p>Millage: <span>{{extractcar[0].millage}}</span></p>
   </form>
-
-  <p>{{editCar | async | json}}</p>
 </div>
-<!-- <div class="modal-footer">
+<div class="modal-footer">
   <button type="button" class="btn btn-primary"
-  (click)="formDir.resetForm({})">Reset</button>
+  (click)="modalRef.hide()">Cancel</button>
 <button type="button" class="btn btn-dark" 
-  [disabled]="carForm.invalid" 
-  (click)="onSubmitAddNewCarForm()" 
-  (click)="c('Save click')">Save</button>
-</div> -->
+  [disabled]="carFormEdit.invalid" 
+  (click)="onSubmitEditCarForm()">Save</button>
+</div>

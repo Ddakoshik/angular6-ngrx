@@ -6,6 +6,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Observable } from '../../../node_modules/rxjs';
 import { Store } from '../../../node_modules/@ngrx/store';
 import { selectSelectedCar } from './../shared/redux/cars.reducer';
+import { CarsService } from '../shared/service/cars.service';
 
 
 @Component({
@@ -15,31 +16,62 @@ import { selectSelectedCar } from './../shared/redux/cars.reducer';
 })
 export class EditCarComponent implements OnInit {
 
-  editCar: Observable<Vehicles>;
   closeResult: string;
   carFormEdit: FormGroup;
-
-
+  extractcar: Vehicle;
   selected$: Observable<Vehicle>;
 
 
   constructor(private modalService: BsModalService,
               private modalRef: BsModalRef,
-              private store: Store<Vehicles>,
+              private carservice: CarsService,
+              private store: Store<Vehicle>,
               private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.editCar = this.store.select(selectSelectedCar);
-    this.initForm(this.editCar);
+    this.store.select(selectSelectedCar).subscribe( data => this.extractcar = data);
+    this.initForm(this.extractcar);
+
   }
 
-  initForm(editCar) {
+  initForm(extractcar) {
     this.carFormEdit = this.fb.group({
-      brand: [editCar.brand, [Validators.required, Validators.maxLength(50)]],
-      year: ['', [Validators.required, Validators.min(2000), Validators.max(2018)]],
-      millage: ['', [Validators.required]]
+      brand: [extractcar[0].brand, [Validators.required, Validators.maxLength(50)]],
+      year: [extractcar[0].year, [Validators.required, Validators.min(2000), Validators.max(2018)]],
     });
   }
 
+  onSubmitEditCarForm() {
+    const controls = this.carFormEdit.controls;
+    const brand = this.carFormEdit.value.brand;
+    const year = this.carFormEdit.value.year;
+    const millage = this.extractcar[0].millage;
+    const code = this.extractcar[0].code;
+    const id = this.extractcar[0].id;
 
+
+    const car: Vehicle = {
+      brand,
+      year,
+      code ,
+      millage,
+      id
+      };
+
+    /** Проверяем форму на валидность */
+    if (this.carFormEdit.invalid) {
+      /** Если форма не валидна, то помечаем все контролы как touched*/
+      console.log('заполните все поля');
+      Object.keys(controls)
+        .forEach(controlName => controls[controlName].markAsTouched());
+
+        /** Прерываем выполнение метода*/
+        return;
+      } else {
+
+        this.carservice.editCar(car);
+        this.modalRef.hide();
+      }
+    console.log('123123');
+  }
 }

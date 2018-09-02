@@ -28,6 +28,13 @@ export function carsReducer (state = initialState, action: CarsAction) {
                 ...state,
                 selectedCar: car
             };
+        case CAR_ACTION.SAVE_EDIT_CAR:
+            return{
+                ...state,
+                cars: [...state.cars.map( data => {
+                    action.payload.id = data;
+                })]
+            };
         case CAR_ACTION.LOAD_CAR:
             return {
                 ...state,

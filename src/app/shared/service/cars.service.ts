@@ -4,7 +4,7 @@ import { Store } from '../../../../node_modules/@ngrx/store';
 import { AppState } from '../redux/app.state';
 import { map } from 'rxjs/operators';
 import { Vehicle } from '../models/vehicle.model';
-import { LoadCars, AddCar, DeleteCar } from '../redux/cars.action';
+import { LoadCars, AddCar, DeleteCar, EditCar, SaveEditCar } from '../redux/cars.action';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class CarsService {
               private store: Store<AppState>  ) { }
 
   loadCars(): void {
-    this.http.get(CarsService.BASE_URL + 'cars').subscribe(data => {
+    this.http.get(CarsService.BASE_URL + 'cars').subscribe((data: Vehicle[]) => {
       this.store.dispatch(new LoadCars(data));
     });
   }
@@ -29,6 +29,16 @@ export class CarsService {
       },
       err => {
         console.log('Error add car');
+      }
+    );
+  }
+  editCar(car: Vehicle) {
+    this.http.put(CarsService.BASE_URL + 'cars/' +  car.id, car).subscribe(
+      res => {
+        this.store.dispatch(new SaveEditCar(car));
+      },
+      err => {
+        console.log('Error edit car');
       }
     );
   }
