@@ -32,7 +32,11 @@ export function carsReducer (state = initialState, action: CarsAction) {
             return{
                 ...state,
                 cars: [...state.cars.map( data => {
-                    action.payload.id = data;
+                    const flag = action.payload.id === data.id;
+                    if (flag) {
+                        data = action.payload;
+                        console.log(data);
+                    }
                 })]
             };
         case CAR_ACTION.LOAD_CAR:
