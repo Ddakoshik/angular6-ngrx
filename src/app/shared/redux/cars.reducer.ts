@@ -37,6 +37,7 @@ export function carsReducer (state = initialState, action: CarsAction) {
                         data = action.payload;
                         console.log(data);
                     }
+                    return data;
                 })]
             };
         case CAR_ACTION.LOAD_CAR:
