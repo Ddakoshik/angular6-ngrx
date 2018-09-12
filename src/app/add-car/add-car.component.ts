@@ -42,10 +42,12 @@ export class AddCarComponent implements OnInit, OnChanges {
   initForm() {
     this.carForm = this.fb.group({
       brand: ['', [Validators.required, Validators.maxLength(50)]],
-      year: ['', [Validators.required, Validators.min(2000), Validators.max(2018)]],
-      millage: ['', [Validators.required]]
+      year: ['', [Validators.required, Validators.min(2000), Validators.max(2018), Validators.pattern('^[0-9]+$')]],
+      millage: ['', [Validators.required, Validators.pattern('^[0-9]+$')]]
     });
   }
+
+  // static NUMBER_REGEXP =  /^\d+$/;
 
   ngOnChanges(changes) {
     if (changes && changes.car) {
