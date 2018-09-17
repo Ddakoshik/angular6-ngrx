@@ -3,7 +3,7 @@ import { Vehicle, Vehicles } from './shared/models/vehicle.model';
 import { Store } from '../../node_modules/@ngrx/store';
 import { AppState } from './shared/redux/app.state';
 import { Observable } from '../../node_modules/rxjs';
-import { AddCar, DeleteCar, EditCar } from './shared/redux/cars.action';
+import { AddCar, DeleteCar, EditCar, LoadCars } from './shared/redux/cars.action';
 import { ModalDismissReasons, NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
 
@@ -37,7 +37,10 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.carState = this.store.select(selectFeature);
     this.cars = this.store.select(selectCars);
-    this.carservice.loadCars();
+    this.loadCars();
+  }
+  loadCars() {
+    this.store.dispatch(new LoadCars());
   }
 
 

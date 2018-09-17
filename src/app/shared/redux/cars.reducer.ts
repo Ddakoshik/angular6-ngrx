@@ -40,7 +40,7 @@ export function carsReducer (state = initialState, action: CarsAction) {
                     return data;
                 })]
             };
-        case CAR_ACTION.LOAD_CAR:
+        case CAR_ACTION.LOAD_CAR_AFTER_EFFECT:
             return {
                 ...state,
                 cars: [...action.payload]

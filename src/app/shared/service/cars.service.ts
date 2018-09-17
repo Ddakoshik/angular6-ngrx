@@ -16,21 +16,18 @@ export class CarsService {
   constructor(private http: HttpClient,
               private store: Store<AppState>  ) { }
 
-  loadCars(): void {
-    this.http.get(CarsService.BASE_URL + 'cars').subscribe((data: Vehicle[]) => {
-      this.store.dispatch(new LoadCars(data));
-    });
+  // loadCars(): void {
+  //   this.http.get(CarsService.BASE_URL + 'cars').subscribe((data: Vehicle[]) => {
+  //     this.store.dispatch(new LoadCars(data));
+  //   });
+  // }
+
+  loadCarsEffect() {
+    return this.http.get(CarsService.BASE_URL + 'cars');
   }
 
   addCar(car: Vehicle) {
-    this.http.post(CarsService.BASE_URL + 'cars', car).subscribe(
-      res => {
-        this.store.dispatch(new AddCar(car));
-      },
-      err => {
-        console.log('Error add car');
-      }
-    );
+    return this.http.post(CarsService.BASE_URL + 'cars', car);
   }
   editCar(car: Vehicle) {
     this.http.put(CarsService.BASE_URL + 'cars/' +  car.id, car).subscribe(
