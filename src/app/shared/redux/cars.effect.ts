@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { CAR_ACTION, LoadCarsAfterEffect, LoadCarsAfterEffectError, AddCar } from './cars.action';
+import { CAR_ACTION, LoadCarsAfterEffect, LoadCarsAfterEffectError, AddCar, EditCar, AddCarAfterEffect, AddCarAfterEffectError, EditCarAfterEffect, EditCarAfterEffectError } from './cars.action';
 import { CarsService } from '../service/cars.service';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -30,8 +30,18 @@ export class CarsEffect {
             return this.service
                 .addCar(action.payload)
                 .pipe(
-                    map(car => new LoadCarsAfterEffect(car)),
-                    catchError(error => of(new LoadCarsAfterEffectError(error)))
+                    map(car => new AddCarAfterEffect(car)),
+                    catchError(error => of(new AddCarAfterEffectError(error)))
+                );
+        })
+    );
+    @Effect() editCar = this.actions$.ofType(CAR_ACTION.EDIT_CAR).pipe(
+        switchMap((action: EditCar) => {
+            return this.service
+                .editCar(action.payload)
+                .pipe(
+                    map(car => new EditCarAfterEffect(car)),
+                    catchError(error => of(new EditCarAfterEffectError(error)))
                 );
         })
     );

@@ -30,14 +30,7 @@ export class CarsService {
     return this.http.post(CarsService.BASE_URL + 'cars', car);
   }
   editCar(car: Vehicle) {
-    this.http.put(CarsService.BASE_URL + 'cars/' +  car.id, car).subscribe(
-      res => {
-        this.store.dispatch(new SaveEditCar(car));
-      },
-      err => {
-        console.log('Error edit car');
-      }
-    );
+    return this.http.put(CarsService.BASE_URL + 'cars/' +  car.id, car);
   }
   deleteCar(car: Vehicle ) {
     this.http.delete(CarsService.BASE_URL + 'cars/' + car.id).subscribe(
