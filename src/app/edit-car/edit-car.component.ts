@@ -7,6 +7,7 @@ import { Observable } from '../../../node_modules/rxjs';
 import { Store } from '../../../node_modules/@ngrx/store';
 import { selectSelectedCar } from './../shared/redux/cars.reducer';
 import { CarsService } from '../shared/service/cars.service';
+import { EditCar } from '../shared/redux/cars.action';
 
 
 @Component({
@@ -69,9 +70,8 @@ export class EditCarComponent implements OnInit {
         return;
       } else {
 
-        this.carservice.editCar(car);
+        this.store.dispatch(new EditCar(car));
         this.modalRef.hide();
       }
-    console.log('123123');
   }
 }

@@ -1,6 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { CAR_ACTION, LoadCarsAfterEffect, LoadCarsAfterEffectError, AddCar, EditCar, AddCarAfterEffect, AddCarAfterEffectError, EditCarAfterEffect, EditCarAfterEffectError } from './cars.action';
+import { CAR_ACTION,
+    LoadCarsAfterEffect,
+    LoadCarsAfterEffectError,
+    AddCar,
+    EditCar,
+    AddCarAfterEffect,
+    AddCarAfterEffectError,
+    EditCarAfterEffect,
+    EditCarAfterEffectError,
+    DeleteCarAfterEffectError,
+    DeleteCarAfterEffect,
+    DeleteCar} from './cars.action';
 import { CarsService } from '../service/cars.service';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -18,9 +29,9 @@ export class CarsEffect {
     @Effect() loadCar = this.actions$.ofType(CAR_ACTION.LOAD_CAR).pipe(
         switchMap(() => {
             return this.service
-                .loadCarsEffect()
+                .loadCars()
                 .pipe(
-                    map(movies => new LoadCarsAfterEffect(movies)),
+                    map((movies: Vehicle) => new LoadCarsAfterEffect(movies)),
                     catchError(error => of(new LoadCarsAfterEffectError(error)))
                 );
         })
@@ -30,7 +41,7 @@ export class CarsEffect {
             return this.service
                 .addCar(action.payload)
                 .pipe(
-                    map(car => new AddCarAfterEffect(car)),
+                    map((car: Vehicle) => new AddCarAfterEffect(car)),
                     catchError(error => of(new AddCarAfterEffectError(error)))
                 );
         })
@@ -40,8 +51,18 @@ export class CarsEffect {
             return this.service
                 .editCar(action.payload)
                 .pipe(
-                    map(car => new EditCarAfterEffect(car)),
+                    map((car: Vehicle) => new EditCarAfterEffect(car)),
                     catchError(error => of(new EditCarAfterEffectError(error)))
+                );
+        })
+    );
+    @Effect() deleteCar = this.actions$.ofType(CAR_ACTION.DELETE_CAR).pipe(
+        switchMap((action: DeleteCar) => {
+            return this.service
+                .deleteCar(action.payload)
+                .pipe(
+                    map((car: Vehicle) => new DeleteCarAfterEffect(car)),
+                    catchError(error => of(new DeleteCarAfterEffectError(error)))
                 );
         })
     );

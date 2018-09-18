@@ -1,5 +1,3 @@
-import { Action } from '@ngrx/store';
-import { Vehicle } from '../models/vehicle.model';
 import { CAR_ACTION, CarsAction } from './cars.action';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
@@ -12,7 +10,7 @@ const initialState = {
 
 export function carsReducer (state = initialState, action: CarsAction) {
     switch (action.type) {
-        case CAR_ACTION.ADD_CAR:
+        case CAR_ACTION.ADD_CAR_AFTER_EFFECT:
             return {
                 ...state,
                 cars: [...state.cars, action.payload]
@@ -22,13 +20,15 @@ export function carsReducer (state = initialState, action: CarsAction) {
                 ...state,
                 cars: [...state.cars.filter(c => c.id !== action.payload.id)]
             };
-        case CAR_ACTION.EDIT_CAR:
+
+
+        case CAR_ACTION.EDIT_CAR_SEND_DATA_IN_MODAL:
         const car = state.cars.filter(c => c.id === action.payload.id);
             return{
                 ...state,
                 selectedCar: car
             };
-        case CAR_ACTION.SAVE_EDIT_CAR:
+        case CAR_ACTION.EDIT_CAR_AFTER_EFFECT:
             return{
                 ...state,
                 cars: [...state.cars.map( data => {
